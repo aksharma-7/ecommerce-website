@@ -42,10 +42,10 @@ const OrderScreen = ({ match }) => {
       if (!window.paypal) {
         addPayPalScript()
       } else {
-        sdkReady(true)
+        setSdkReady(true)
       }
     }
-  }, [orderId, dispatch, successPay, order, sdkReady])
+  }, [orderId, dispatch, successPay, order])
 
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult)
