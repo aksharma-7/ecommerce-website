@@ -1,8 +1,8 @@
 import asyncHandler from 'express-async-handler'
 import Product from '../models/productModel.js'
 
-// @route   GET /api/products
 // @desc    Fetch all products
+// @route   GET /api/products
 // @access  Public
 const getProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({})
@@ -10,8 +10,8 @@ const getProducts = asyncHandler(async (req, res) => {
   res.json(products)
 })
 
-// @route   GET /api/products/:id
 // @desc    Fetch single product
+// @route   GET /api/products/:id
 // @access  Public
 const getProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
@@ -24,4 +24,19 @@ const getProductById = asyncHandler(async (req, res) => {
   }
 })
 
-export { getProducts, getProductById }
+// @desc    Delete a product
+// @route   GET /api/products/:id
+// @access  Private/Admin
+const deleteProduct = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id)
+
+  if (product) {
+    await product.remove()
+    res.json({ message: 'Product Removed' })
+  } else {
+    res.status(404)
+    throw new Error('Product not Found')
+  }
+})
+
+export { getProducts, getProductById, deleteProduct }
